@@ -25,9 +25,14 @@
 @plugin "@tailwindcss/typography";
 
 @source inline("lg:col-span-4");
+@source inline("lg:col-span-5");
 @source inline("lg:col-span-6");
+@source inline("lg:col-span-7");
 @source inline("lg:col-span-8");
 @source inline("lg:col-span-12");
+@source inline("md:col-span-5");
+@source inline("md:col-span-7");
+@source inline("md:col-span-12");
 @source inline("border-border");
 @source inline("bg-card");
 @source inline("border-error");
@@ -44,7 +49,7 @@
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 86rem;
   --font-mono: var(--font-geist-mono);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
 }
 
 @layer utilities {
@@ -86,81 +91,48 @@
   }
 }
 
+/* === Industrial Fluidity Design System === */
 :root {
-  --background: oklch(100% 0 0deg);
-  --foreground: oklch(14.5% 0 0deg);
-  --card: oklch(96.5% 0.005 265deg);
-  --card-foreground: oklch(14.5% 0 0deg);
-  --popover: oklch(100% 0 0deg);
-  --popover-foreground: oklch(14.5% 0 0deg);
-  --primary: oklch(20.5% 0 0deg);
-  --primary-foreground: oklch(98.5% 0 0deg);
-  --secondary: oklch(97% 0 0deg);
-  --secondary-foreground: oklch(20.5% 0 0deg);
-  --muted: oklch(97% 0 0deg);
-  --muted-foreground: oklch(55.6% 0 0deg);
-  --accent: oklch(97% 0 0deg);
-  --accent-foreground: oklch(20.5% 0 0deg);
-  --destructive: oklch(57.7% 0.245 27.325deg);
-  --destructive-foreground: oklch(57.7% 0.245 27.325deg);
-  --border: oklch(92.2% 0 0deg);
-  --input: oklch(92.2% 0 0deg);
-  --ring: oklch(70.8% 0 0deg);
-  --chart-1: oklch(64.6% 0.222 41.116deg);
-  --chart-2: oklch(60% 0.118 184.704deg);
-  --chart-3: oklch(39.8% 0.07 227.392deg);
-  --chart-4: oklch(82.8% 0.189 84.429deg);
-  --chart-5: oklch(76.9% 0.188 70.08deg);
-  --radius: 0.625rem;
-  --sidebar: oklch(98.5% 0 0deg);
-  --sidebar-foreground: oklch(14.5% 0 0deg);
-  --sidebar-primary: oklch(20.5% 0 0deg);
-  --sidebar-primary-foreground: oklch(98.5% 0 0deg);
-  --sidebar-accent: oklch(97% 0 0deg);
-  --sidebar-accent-foreground: oklch(20.5% 0 0deg);
-  --sidebar-border: oklch(92.2% 0 0deg);
-  --sidebar-ring: oklch(70.8% 0 0deg);
-  --success: oklch(78% 0.08 200deg);
-  --warning: oklch(89% 0.1 75deg);
-  --error: oklch(75% 0.15 25deg);
-}
+  /* Surfaces */
+  --background: #f7f9ff;
+  --foreground: #091d2e;
+  --surface: #f7f9ff;
+  --surface-container-low: #edf4ff;
+  --surface-container: #e3efff;
+  --surface-container-high: #d9eaff;
+  --surface-container-highest: #d1e4fb;
+  --surface-container-lowest: #ffffff;
 
-[data-theme='dark'] {
-  --background: oklch(14.5% 0 0deg);
-  --foreground: oklch(98.5% 0 0deg);
-  --card: oklch(17% 0 0deg);
-  --card-foreground: oklch(98.5% 0 0deg);
-  --popover: oklch(14.5% 0 0deg);
-  --popover-foreground: oklch(98.5% 0 0deg);
-  --primary: oklch(98.5% 0 0deg);
-  --primary-foreground: oklch(20.5% 0 0deg);
-  --secondary: oklch(26.9% 0 0deg);
-  --secondary-foreground: oklch(98.5% 0 0deg);
-  --muted: oklch(26.9% 0 0deg);
-  --muted-foreground: oklch(70.8% 0 0deg);
-  --accent: oklch(26.9% 0 0deg);
-  --accent-foreground: oklch(98.5% 0 0deg);
-  --destructive: oklch(39.6% 0.141 25.723deg);
-  --destructive-foreground: oklch(63.7% 0.237 25.331deg);
-  --border: oklch(26.9% 0 0deg);
-  --input: oklch(26.9% 0 0deg);
-  --ring: oklch(43.9% 0 0deg);
-  --chart-1: oklch(48.8% 0.243 264.376deg);
-  --chart-2: oklch(69.6% 0.17 162.48deg);
-  --chart-3: oklch(76.9% 0.188 70.08deg);
-  --chart-4: oklch(62.7% 0.265 303.9deg);
-  --chart-5: oklch(64.5% 0.246 16.439deg);
-  --sidebar: oklch(20.5% 0 0deg);
-  --sidebar-foreground: oklch(98.5% 0 0deg);
-  --sidebar-primary: oklch(48.8% 0.243 264.376deg);
-  --sidebar-primary-foreground: oklch(98.5% 0 0deg);
-  --sidebar-accent: oklch(26.9% 0 0deg);
-  --sidebar-accent-foreground: oklch(98.5% 0 0deg);
-  --sidebar-border: oklch(26.9% 0 0deg);
-  --sidebar-ring: oklch(43.9% 0 0deg);
-  --success: oklch(28% 0.1 200deg);
-  --warning: oklch(35% 0.08 70deg);
-  --error: oklch(45% 0.1 25deg);
+  /* Brand */
+  --primary: #00677d;
+  --primary-foreground: #ffffff;
+  --primary-container: #00b4d8;
+  --secondary: #2f6388;
+  --secondary-foreground: #ffffff;
+  --on-surface: #091d2e;
+  --on-surface-variant: #3d494d;
+  --outline: #6d797e;
+  --outline-variant: #bcc9ce;
+
+  /* Compatibility with shadcn components */
+  --card: #ffffff;
+  --card-foreground: #091d2e;
+  --popover: #ffffff;
+  --popover-foreground: #091d2e;
+  --muted: #edf4ff;
+  --muted-foreground: #3d494d;
+  --accent: #edf4ff;
+  --accent-foreground: #091d2e;
+  --destructive: #ba1a1a;
+  --destructive-foreground: #ffffff;
+  --border: #bcc9ce;
+  --input: #bcc9ce;
+  --ring: #00b4d8;
+  --radius: 0.75rem;
+
+  --success: #2e7d32;
+  --warning: #ed6c02;
+  --error: #ba1a1a;
 }
 
 @theme inline {
@@ -183,23 +155,10 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
@@ -207,18 +166,33 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-outline-variant/20 outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply bg-surface text-on-surface min-h-[100vh] flex flex-col font-body;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background-color: rgba(0, 180, 216, 0.3);
   }
 }
 
 html {
-  opacity: 0;
+  opacity: 1;
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
-  opacity: initial;
+/* Stitch Design System — Custom Utilities */
+.hero-gradient {
+  background: linear-gradient(135deg, #1A5276 0%, #091d2e 100%);
+}
+
+.primary-gradient {
+  background: linear-gradient(135deg, #00677d 0%, #00b4d8 100%);
+}
+
+.blueprint-dots {
+  background-image: radial-gradient(#00b4d8 0.5px, transparent 0.5px);
+  background-size: 12px 12px;
+  background-color: #d1e4fb;
 }

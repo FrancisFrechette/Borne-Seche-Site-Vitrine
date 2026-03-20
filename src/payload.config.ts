@@ -5,12 +5,19 @@ import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
+import { Faq } from './collections/Faq'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { Realisations } from './collections/Realisations'
+import { Sectors } from './collections/Sectors'
+import { Services } from './collections/Services'
 import { Users } from './collections/Users'
+import { Inquiries } from './collections/Inquiries'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { Home } from './globals/Home/config'
+import { About } from './globals/About/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -60,9 +67,34 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Services,
+    Realisations,
+    Sectors,
+    Faq,
+    Inquiries,
+    Users,
+  ],
+  localization: {
+    locales: [
+      {
+        label: 'Français',
+        code: 'fr',
+      },
+      {
+        label: 'English',
+        code: 'en',
+      },
+    ],
+    defaultLocale: 'fr',
+    fallback: true,
+  },
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, Home, About],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

@@ -8,7 +8,18 @@ export const Footer: GlobalConfig = {
   access: {
     read: () => true,
   },
+  admin: {
+    group: 'Navigation',
+  },
   fields: [
+    {
+      name: 'companyDescription',
+      type: 'textarea',
+      localized: true,
+      admin: {
+        description: 'Courte description de l\'entreprise affichée dans le footer',
+      },
+    },
     {
       name: 'navItems',
       type: 'array',
@@ -17,12 +28,48 @@ export const Footer: GlobalConfig = {
           appearances: false,
         }),
       ],
-      maxRows: 6,
+      maxRows: 8,
       admin: {
         initCollapsed: true,
         components: {
           RowLabel: '@/Footer/RowLabel#RowLabel',
         },
+      },
+    },
+    {
+      name: 'contact',
+      type: 'group',
+      admin: {
+        description: 'Coordonnées affichées dans le footer',
+      },
+      fields: [
+        {
+          name: 'phone',
+          type: 'text',
+          admin: {
+            description: 'Numéro de téléphone (ex: +1 819 555-0123)',
+          },
+        },
+        {
+          name: 'email',
+          type: 'email',
+        },
+        {
+          name: 'address',
+          type: 'textarea',
+          localized: true,
+          admin: {
+            description: 'Adresse postale',
+          },
+        },
+      ],
+    },
+    {
+      name: 'copyright',
+      type: 'text',
+      localized: true,
+      admin: {
+        description: 'Texte de copyright (ex: © 2026 Solutions d\'eau Bourgelas)',
       },
     },
   ],

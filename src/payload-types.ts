@@ -71,6 +71,11 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    services: Service;
+    realisations: Realisation;
+    sectors: Sector;
+    faq: Faq;
+    inquiries: Inquiry;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -93,6 +98,11 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    realisations: RealisationsSelect<false> | RealisationsSelect<true>;
+    sectors: SectorsSelect<false> | SectorsSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
+    inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -108,16 +118,23 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('fr' | 'en') | ('fr' | 'en')[];
   globals: {
     header: Header;
     footer: Footer;
+    home: Home;
+    about: About;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    home: HomeSelect<false> | HomeSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
   };
-  locale: null;
+  locale: 'fr' | 'en';
+  widgets: {
+    collections: CollectionsWidget;
+  };
   user: User;
   jobs: {
     tasks: {
@@ -780,6 +797,312 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: string;
+  title: string;
+  /**
+   * Court résumé du service (utilisé dans les cartes et le SEO)
+   */
+  excerpt: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Données techniques affichées dans les Blueprint Cards
+   */
+  specs?:
+    | {
+        /**
+         * Ex: Performance, Résistance, Matériau, Certification
+         */
+        category?: string | null;
+        /**
+         * Ex: DÉBIT NOMINAL, PRESSION DE SERVICE
+         */
+        label: string;
+        /**
+         * Ex: 1500, 250, ACIER GALVANISÉ
+         */
+        value: string;
+        /**
+         * Ex: GPM, PSI
+         */
+        unit?: string | null;
+        /**
+         * Ex: Testé @ 20 PSI, ASTM A-53 Grade B
+         */
+        note?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Icône du service (SVG ou PNG recommandé)
+   */
+  icon?: (string | null) | Media;
+  /**
+   * Image principale du service
+   */
+  image?: (string | null) | Media;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * Ordre d'affichage (0 = premier)
+   */
+  order?: number | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "realisations".
+ */
+export interface Realisation {
+  id: string;
+  title: string;
+  /**
+   * Court résumé de la réalisation
+   */
+  excerpt: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Données affichées dans les Blueprint Cards (ex: Débit, Population, Durée)
+   */
+  technicalStats?:
+    | {
+        /**
+         * Nom de l'icône (ex: waves, groups, timer)
+         */
+        icon?: string | null;
+        /**
+         * Ex: Débit Maximal, Impact Citoyen
+         */
+        label: string;
+        /**
+         * Ex: 5000, 50k, 6
+         */
+        value: string;
+        /**
+         * Ex: GPM, Résidents, Mois
+         */
+        unit?: string | null;
+        /**
+         * Courte description sous la statistique
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Description du défi structural du projet
+   */
+  challenge?: string | null;
+  /**
+   * La réponse Bourgelas au défi
+   */
+  solution?: string | null;
+  highlights?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Nom du client (municipalité, entreprise, etc.)
+   */
+  client?: string | null;
+  /**
+   * Lieu de la réalisation
+   */
+  location?: string | null;
+  /**
+   * Date de réalisation du projet
+   */
+  completionDate?: string | null;
+  /**
+   * Secteurs liés à cette réalisation
+   */
+  sectors?: (string | Sector)[] | null;
+  /**
+   * Services utilisés dans cette réalisation
+   */
+  services?: (string | Service)[] | null;
+  /**
+   * Image principale de la réalisation
+   */
+  featuredImage: string | Media;
+  /**
+   * Galerie photos du projet
+   */
+  gallery?:
+    | {
+        image: string | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sectors".
+ */
+export interface Sector {
+  id: string;
+  title: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Court résumé du secteur
+   */
+  excerpt?: string | null;
+  /**
+   * Icône du secteur
+   */
+  icon?: (string | null) | Media;
+  /**
+   * Image représentative du secteur
+   */
+  image?: (string | null) | Media;
+  /**
+   * Ordre d'affichage (0 = premier)
+   */
+  order?: number | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: string;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category?: ('general' | 'nfpa' | 'rbq' | 'maintenance' | 'bornes-seches' | 'installation') | null;
+  /**
+   * Ordre d'affichage (0 = premier)
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries".
+ */
+export interface Inquiry {
+  id: string;
+  /**
+   * Nom complet du demandeur
+   */
+  name: string;
+  /**
+   * Municipalité ou entreprise
+   */
+  organization?: string | null;
+  email: string;
+  phone?: string | null;
+  sector?: ('municipal' | 'agricultural' | 'industrial' | 'other') | null;
+  /**
+   * Détails techniques du projet
+   */
+  message: string;
+  /**
+   * Langue utilisée lors de la soumission
+   */
+  locale?: string | null;
+  status?: ('new' | 'in_progress' | 'completed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -798,6 +1121,14 @@ export interface Redirect {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'services';
+          value: string | Service;
+        } | null)
+      | ({
+          relationTo: 'realisations';
+          value: string | Realisation;
         } | null);
     url?: string | null;
   };
@@ -983,6 +1314,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: string | Service;
+      } | null)
+    | ({
+        relationTo: 'realisations';
+        value: string | Realisation;
+      } | null)
+    | ({
+        relationTo: 'sectors';
+        value: string | Sector;
+      } | null)
+    | ({
+        relationTo: 'faq';
+        value: string | Faq;
+      } | null)
+    | ({
+        relationTo: 'inquiries';
+        value: string | Inquiry;
       } | null)
     | ({
         relationTo: 'users';
@@ -1332,6 +1683,135 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  excerpt?: T;
+  content?: T;
+  specs?:
+    | T
+    | {
+        category?: T;
+        label?: T;
+        value?: T;
+        unit?: T;
+        note?: T;
+        id?: T;
+      };
+  icon?: T;
+  image?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  order?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "realisations_select".
+ */
+export interface RealisationsSelect<T extends boolean = true> {
+  title?: T;
+  excerpt?: T;
+  content?: T;
+  technicalStats?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        value?: T;
+        unit?: T;
+        description?: T;
+        id?: T;
+      };
+  challenge?: T;
+  solution?: T;
+  highlights?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  client?: T;
+  location?: T;
+  completionDate?: T;
+  sectors?: T;
+  services?: T;
+  featuredImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sectors_select".
+ */
+export interface SectorsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  excerpt?: T;
+  icon?: T;
+  image?: T;
+  order?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries_select".
+ */
+export interface InquiriesSelect<T extends boolean = true> {
+  name?: T;
+  organization?: T;
+  email?: T;
+  phone?: T;
+  sector?: T;
+  message?: T;
+  locale?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -1634,6 +2114,10 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: string;
+  /**
+   * Texte alternatif du logo (accessibilité)
+   */
+  logoAlt?: string | null;
   navItems?:
     | {
         link: {
@@ -1654,6 +2138,31 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Bouton d'action principal dans le header (ex: Demander une soumission)
+   */
+  ctaButton?: {
+    enabled?: boolean | null;
+    link?: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: string | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: string | Post;
+          } | null);
+      url?: string | null;
+      label: string;
+      /**
+       * Choose how the link should be rendered.
+       */
+      appearance?: ('default' | 'outline') | null;
+    };
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1663,6 +2172,10 @@ export interface Header {
  */
 export interface Footer {
   id: string;
+  /**
+   * Courte description de l'entreprise affichée dans le footer
+   */
+  companyDescription?: string | null;
   navItems?:
     | {
         link: {
@@ -1683,6 +2196,187 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Coordonnées affichées dans le footer
+   */
+  contact?: {
+    /**
+     * Numéro de téléphone (ex: +1 819 555-0123)
+     */
+    phone?: string | null;
+    email?: string | null;
+    /**
+     * Adresse postale
+     */
+    address?: string | null;
+  };
+  /**
+   * Texte de copyright (ex: © 2026 Solutions d'eau Bourgelas)
+   */
+  copyright?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: string;
+  /**
+   * Titre interne de la page d'accueil (utilisé pour le SEO)
+   */
+  title?: string | null;
+  /**
+   * Description META pour le SEO de la page d'accueil
+   */
+  metaDescription?: string | null;
+  /**
+   * Construisez la page d'accueil en ajoutant des blocs modulaires
+   */
+  layout: (HeroBlock | StatsBlock | VideoBlock)[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  /**
+   * Titre H1 principal affiché dans le hero
+   */
+  heading: string;
+  /**
+   * Sous-titre affiché sous le H1
+   */
+  subheading?: string | null;
+  cta: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  /**
+   * Image d'arrière-plan du hero (format paysage recommandé, min 1920px)
+   */
+  backgroundImage: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'heroBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  /**
+   * Titre optionnel de la section statistiques
+   */
+  heading?: string | null;
+  /**
+   * Chiffres clés à afficher (ex: 30+ ans d'expérience)
+   */
+  stats: {
+    /**
+     * Valeur numérique (ex: "30+", "300+", "100%")
+     */
+    value: string;
+    /**
+     * Description du chiffre (ex: "Années d'expérience")
+     */
+    label: string;
+    /**
+     * Suffixe optionnel (ex: "projets", "clients")
+     */
+    suffix?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'statsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock".
+ */
+export interface VideoBlock {
+  /**
+   * Titre de la section vidéo
+   */
+  heading?: string | null;
+  /**
+   * Texte d'introduction avant la vidéo
+   */
+  description?: string | null;
+  /**
+   * URL complète de la vidéo YouTube (ex: https://www.youtube.com/watch?v=xxxxx)
+   */
+  youtubeUrl: string;
+  /**
+   * Image de couverture personnalisée (optionnel, sinon la miniature YouTube sera utilisée)
+   */
+  thumbnail?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: string;
+  /**
+   * Titre principal de la section héro
+   */
+  heroTitle?: string | null;
+  /**
+   * Sous-titre descriptif
+   */
+  heroSubtitle?: string | null;
+  timeline?:
+    | {
+        /**
+         * Ex: 1994, 2008, 2024
+         */
+        year: string;
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  values?:
+    | {
+        /**
+         * Nom icône (ex: precision_manufacturing, water_drop)
+         */
+        icon?: string | null;
+        title: string;
+        description?: string | null;
+        /**
+         * Utiliser le style Blueprint Card au lieu du style standard
+         */
+        isBlueprint?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaTitle?: string | null;
+  ctaDescription?: string | null;
+  ctaButton?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1691,6 +2385,7 @@ export interface Footer {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  logoAlt?: T;
   navItems?:
     | T
     | {
@@ -1704,6 +2399,21 @@ export interface HeaderSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        enabled?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1714,6 +2424,7 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  companyDescription?: T;
   navItems?:
     | T
     | {
@@ -1728,9 +2439,126 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  contact?:
+    | T
+    | {
+        phone?: T;
+        email?: T;
+        address?: T;
+      };
+  copyright?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  title?: T;
+  metaDescription?: T;
+  layout?:
+    | T
+    | {
+        heroBlock?: T | HeroBlockSelect<T>;
+        statsBlock?: T | StatsBlockSelect<T>;
+        videoBlock?: T | VideoBlockSelect<T>;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  cta?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
+  backgroundImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        suffix?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock_select".
+ */
+export interface VideoBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  youtubeUrl?: T;
+  thumbnail?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  heroTitle?: T;
+  heroSubtitle?: T;
+  timeline?:
+    | T
+    | {
+        year?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  values?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        isBlueprint?: T;
+        id?: T;
+      };
+  ctaTitle?: T;
+  ctaDescription?: T;
+  ctaButton?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
