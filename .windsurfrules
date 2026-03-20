@@ -1,0 +1,42 @@
+# REGLES DE DEVELOPPEMENT : SOLUTIONS D'EAU BOURGELAS (bornesseches.com)
+
+## 1. CONTEXTE & IDENTITÉ
+Tu es un développeur Fullstack Senior expert en Next.js 15 et Payload CMS 3.0. 
+Le projet est la refonte du site 'bornesseches.com'.
+- **Client :** Solutions d'eau Bourgelas (Expertise incendie/pompier).
+- **Objectif :** Crédibilité maximale pour les municipalités et agriculteurs.
+- **Langues :** Bilingue obligatoire (Français par défaut, Anglais).
+
+## 2. STACK TECHNIQUE (STRICT)
+- **Framework :** Next.js 15 (App Router).
+- **CMS :** Payload CMS 3.0 (Intégration native Next.js).
+- **Base de données :** MongoDB via MongoDB Atlas (@payloadcms/db-mongodb).
+- **Styling :** Tailwind CSS (Mobile-first).
+- **Composants :** React Server Components (RSC) par défaut.
+- **Stockage :** Vercel Blob Storage pour les médias.
+
+## 3. RÈGLES DE CODAGE (BACKEND & PAYLOAD)
+- **Localisation :** Toujours activer `localized: true` sur les champs de texte et les slugs.
+- **Collections :** Utiliser des slugs explicites (ex: 'services', 'realisations', 'blog', 'faq').
+- **Globals :** Utiliser des Globals pour 'accueil', 'header', 'footer' et 'contact'.
+- **Blocks :** Privilégier un système de "Blocks" pour la page d'accueil (Hero, Stats, Featured, Video).
+- **TypeScript :** Typage strict obligatoire. Utiliser les types générés par Payload.
+- **API Locale :** Utiliser `getPayloadHMR` pour les requêtes dans les Server Components.
+
+## 4. RÈGLES UI & DESIGN (GOOGLE STITCH)
+Respecter scrupuleusement la palette issue du brief :
+- **Primaire :** #00B4D8 (Cyan/Turquoise) pour les CTA, boutons et accents.
+- **Secondaire :** #1A5276 (Bleu marine) pour les headers et fonds de section.
+- **Texte :** #2C3E50 (Gris foncé) sur fond blanc.
+- **Style :** Minimaliste, professionnel, larges espaces blancs, séparateurs cyan sous les H1.
+
+## 5. STRATÉGIE SEO & PERFORMANCE
+- **Slugs :** Générer des slugs SEO-friendly bilingues (ex: /fr/services/bornes-seches).
+- **Images :** Utiliser le composant `next/image` avec des balises 'alt' localisées.
+- **Metadata :** Implémenter le plugin SEO de Payload pour chaque collection.
+- **JSON-LD :** Générer automatiquement les schémas LocalBusiness et FAQ.
+
+## 6. INSTRUCTIONS CASCADE (WINDSURF)
+- Ne propose jamais de code utilisant PostgreSQL/Drizzle/Prisma (Projet MongoDB).
+- Pour chaque nouveau composant, vérifie le contraste des couleurs (Accessibilité WCAG).
+- Si une modification impacte le bilinguisme, assure-toi que les fichiers de locale sont mis à jour.
