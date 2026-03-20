@@ -11,8 +11,9 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/next') ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon') ||
-    pathname.includes('.') ||
-    pathname.startsWith('/search')
+    pathname.startsWith('/search') ||
+    pathname.endsWith('sitemap.xml') ||
+    pathname.includes('.')
   ) {
     return NextResponse.next()
   }
@@ -37,5 +38,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|admin|api|favicon|.*\\..*).*)'],
+  matcher: ['/((?!_next|admin|api|next|favicon|sitemap|.*\\..*).*)'],
 }

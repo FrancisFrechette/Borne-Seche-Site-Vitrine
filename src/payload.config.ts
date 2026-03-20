@@ -93,6 +93,7 @@ export default buildConfig({
     defaultLocale: 'fr',
     fallback: true,
   },
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, Home, About],
   plugins,
