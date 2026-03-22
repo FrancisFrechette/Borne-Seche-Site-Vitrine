@@ -28,7 +28,7 @@ const Logo: React.FC = () => {
             fontWeight: 900,
             lineHeight: 1,
             letterSpacing: '-0.02em',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontFamily: "'Manrope', system-ui, -apple-system, sans-serif",
           }}
         >
           B
@@ -42,7 +42,7 @@ const Logo: React.FC = () => {
             color: '#2c2c39',
             letterSpacing: '0.06em',
             lineHeight: 1.1,
-            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontFamily: "'Manrope', system-ui, -apple-system, sans-serif",
             textTransform: 'uppercase' as const,
           }}
         >
@@ -55,7 +55,7 @@ const Logo: React.FC = () => {
             color: '#6b7280',
             letterSpacing: '0.15em',
             textTransform: 'uppercase' as const,
-            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
           }}
         >
           Command Center
