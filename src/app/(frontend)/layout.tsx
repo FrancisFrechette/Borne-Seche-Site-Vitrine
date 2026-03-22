@@ -37,4 +37,13 @@ export const metadata: Metadata = {
   title: "Solutions d'eau Bourgelas",
   description:
     "Leader québécois dans la gestion et l'optimisation des infrastructures d'eau pour les municipalités, l'industrie et l'agriculture de précision.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
 }
