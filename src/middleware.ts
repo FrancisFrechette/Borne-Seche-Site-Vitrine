@@ -1,38 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { locales, defaultLocale } from '@/i18n/locales'
 
-function isBasicAuthRequired() {
-  return Boolean(process.env.BASIC_AUTH_USER && process.env.BASIC_AUTH_PASSWORD)
-}
-
-function isAuthenticated(request: NextRequest): boolean {
-  const authHeader = request.headers.get('authorization')
-  if (!authHeader?.startsWith('Basic ')) return false
-
-  const base64Credentials = authHeader.split(' ')[1]
-  const credentials = atob(base64Credentials)
-  const [user, password] = credentials.split(':')
-
-  return user === process.env.BASIC_AUTH_USER && password === process.env.BASIC_AUTH_PASSWORD
-}
+const BASIC_USER = process.env.BASIC_AUTH_USER || ''
+const BASIC_PASS = process.env.BASIC_AUTH_PASSWORD || ''
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Skip admin, API, static files, and payload routes (no auth needed)
-  const isSkippedRoute =
-    pathname.startsWith('/admin') ||
-    pathname.startsWith('/api') ||
-    pathname.startsWith('/next') ||
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/favicon') ||
-    pathname.startsWith('/search') ||
-    pathname.endsWith('sitemap.xml') ||
-    pathname.includes('.')
+  // ── Basic Auth gate — FORCED on all matched routes ──
+  // If env vars are set, require auth. If not, hardcode a fallback for testing.
+  const user = BASIC_USER || 'admin'
+  const pass = BASIC_PASS || 'admin'
 
-  // Basic Auth gate — only if env vars are set and route is not skipped
-  if (!isSkippedRoute && isBasicAuthRequired() && !isAuthenticated(request)) {
-    return new NextResponse('Authentication required', {
+  const authHeader = request.headers.get('authorization')
+  let authenticated = false
+
+  if (authHeader?.startsWith('Basic ')) {
+    try {
+      const decoded = atob(authHeader.split(' ')[1])
+      const [u, p] = decoded.split(':')
+      authenticated = u === user && p === pass
+    } catch {
+      authenticated = false
+    }
+  }
+
+  if (!authenticated) {
+    return new Response('Authentication required', {
       status: 401,
       headers: {
         'WWW-Authenticate': 'Basic realm="Secure Area"',
@@ -40,10 +34,7 @@ export function middleware(request: NextRequest) {
     })
   }
 
-  // Skip locale logic for non-page routes
-  if (isSkippedRoute) {
-    return NextResponse.next()
-  }
+  // ── Locale routing (after auth passes) ──
 
   // Check if the pathname already has a locale
   const pathnameHasLocale = locales.some(
@@ -65,5 +56,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|admin|api|next|favicon|sitemap|.*\\..*).*)'],
+  matcher: ['/((?!_next|api|admin|next|favicon\\.ico|sitemap\\.xml|.*\\..*).*)', '/'],
 }
