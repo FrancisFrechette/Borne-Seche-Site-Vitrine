@@ -80,6 +80,8 @@ const en = {
     viewPlans: 'View plans',
     dataSheet: 'Data Sheet',
     learnMore: 'Learn more',
+    eyebrow: 'Municipal Infrastructure',
+    emptyState: 'No services available.',
   },
   realisation: {
     specsLabel: 'Technical Specifications',
@@ -95,6 +97,7 @@ const en = {
       'Our engineers are ready to take on your most complex hydraulic infrastructure challenges.',
     ctaButton: 'Start a Project',
     backToProjects: 'Back to projects',
+    emptyState: 'No projects available.',
   },
   faq: {
     eyebrow: 'Technical Support & Expertise',

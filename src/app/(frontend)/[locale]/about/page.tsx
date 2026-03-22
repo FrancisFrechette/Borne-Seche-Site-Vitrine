@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import React from 'react'
 import { getDictionary } from '@/i18n/getDictionary'
 import { type Locale, isValidLocale } from '@/i18n/locales'
@@ -63,7 +65,9 @@ export default async function AboutPage({ params }: AboutPageProps) {
           <div className="space-y-32">
             {about.timeline.map((item, i) => (
               <div key={item.year} className="flex flex-col md:flex-row md:items-start">
-                <div className={`md:w-1/4 md:text-right md:pr-12 mb-4 md:mb-0 ${i === 1 ? 'md:translate-y-8' : ''}`}>
+                <div
+                  className={`md:w-1/4 md:text-right md:pr-12 mb-4 md:mb-0 ${i === 1 ? 'md:translate-y-8' : ''}`}
+                >
                   <span className="text-5xl font-headline font-black text-primary-container/40">
                     {item.year}
                   </span>
