@@ -5,7 +5,6 @@
    ═══════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
 
 /* ── Tokens ── */
 :root {
@@ -104,7 +103,7 @@ h1, h2, h3, h4, h5, h6,
   border-radius: 8px !important;
   transition: all 0.15s ease !important;
   font-weight: 500 !important;
-  font-size: 0.8125rem !important;
+  font-size: 0.9375rem !important;
 }
 
 /* Hover state */
@@ -140,7 +139,7 @@ h1, h2, h3, h4, h5, h6,
   font-weight: 700 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.06em !important;
-  font-size: 0.6875rem !important;
+  font-size: 0.75rem !important;
   color: var(--b-muted) !important;
 }
 
@@ -538,8 +537,14 @@ h1, h2, h3, h4, h5, h6,
   font-size: 0.7rem;
   color: var(--b-muted);
 }
-.bento-nav-card:hover .material-symbols-outlined:last-child {
-  color: var(--b-red) !important;
-  transform: translateX(2px);
+.bento-nav-card__chevron {
+  display: inline-flex;
+  align-items: center;
+  color: #a4a4af;
   transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.bento-nav-card:hover .bento-nav-card__chevron {
+  color: var(--b-red);
+  transform: translateX(2px);
 }
