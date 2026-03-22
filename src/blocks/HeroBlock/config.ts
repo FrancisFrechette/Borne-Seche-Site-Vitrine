@@ -31,16 +31,15 @@ export const HeroBlock: Block = {
       appearances: ['default', 'outline'],
       overrides: {
         name: 'cta',
-        label: 'Bouton d\'action (CTA)',
+        label: "Bouton d'action (CTA)",
       },
     }),
     {
       name: 'backgroundImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
       admin: {
-        description: 'Image d\'arrière-plan du hero (format paysage recommandé, min 1920px)',
+        description: "Image d'arrière-plan du hero (format paysage recommandé, min 1920px)",
       },
     },
   ],
