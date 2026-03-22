@@ -1,6 +1,9 @@
 import type { GlobalConfig } from 'payload'
 
+import { CallToAction } from '../../blocks/CallToAction/config'
+import { FAQAccordionBlock } from '../../blocks/FAQAccordionBlock/config'
 import { HeroBlock } from '../../blocks/HeroBlock/config'
+import { MediaGridBlock } from '../../blocks/MediaGridBlock/config'
 import { StatsBlock } from '../../blocks/StatsBlock/config'
 import { VideoBlock } from '../../blocks/VideoBlock/config'
 import { revalidateHome } from './hooks/revalidateHome'
@@ -19,7 +22,7 @@ export const Home: GlobalConfig = {
       type: 'text',
       localized: true,
       admin: {
-        description: 'Titre interne de la page d\'accueil (utilisé pour le SEO)',
+        description: "Titre interne de la page d'accueil (utilisé pour le SEO)",
       },
     },
     {
@@ -27,16 +30,16 @@ export const Home: GlobalConfig = {
       type: 'textarea',
       localized: true,
       admin: {
-        description: 'Description META pour le SEO de la page d\'accueil',
+        description: "Description META pour le SEO de la page d'accueil",
       },
     },
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [HeroBlock, StatsBlock, VideoBlock],
+      blocks: [HeroBlock, StatsBlock, MediaGridBlock, FAQAccordionBlock, CallToAction, VideoBlock],
       required: true,
       admin: {
-        description: 'Construisez la page d\'accueil en ajoutant des blocs modulaires',
+        description: "Construisez la page d'accueil en ajoutant des blocs modulaires",
       },
     },
   ],

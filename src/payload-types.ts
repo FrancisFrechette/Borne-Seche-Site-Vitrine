@@ -215,7 +215,18 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | MediaGridBlock
+    | ArchiveBlock
+    | FormBlock
+    | FAQAccordionBlock
+    | HeroBlock
+    | StatsBlock
+    | VideoBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -290,7 +301,7 @@ export interface Post {
  */
 export interface Media {
   id: string;
-  alt?: string | null;
+  alt: string;
   caption?: {
     root: {
       type: string;
@@ -563,6 +574,38 @@ export interface MediaBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaGridBlock".
+ */
+export interface MediaGridBlock {
+  /**
+   * Titre optionnel de la galerie
+   */
+  heading?: string | null;
+  /**
+   * Texte d'introduction au-dessus de la grille
+   */
+  description?: string | null;
+  /**
+   * Nombre de colonnes dans la grille
+   */
+  columns?: ('2' | '3' | '4') | null;
+  /**
+   * Images de la grille (max 12)
+   */
+  items: {
+    image: string | Media;
+    /**
+     * Légende optionnelle sous l'image
+     */
+    caption?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaGridBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ArchiveBlock".
  */
 export interface ArchiveBlock {
@@ -794,6 +837,181 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQAccordionBlock".
+ */
+export interface FAQAccordionBlock {
+  /**
+   * Titre de la section FAQ (ex: Questions fréquentes)
+   */
+  heading?: string | null;
+  /**
+   * Texte d'introduction avant les questions
+   */
+  description?: string | null;
+  /**
+   * Source des questions : saisie directe ou depuis la collection FAQ
+   */
+  source?: ('manual' | 'collection') | null;
+  /**
+   * Sélectionnez les FAQ à afficher
+   */
+  faqs?: (string | Faq)[] | null;
+  /**
+   * Questions et réponses personnalisées
+   */
+  items?:
+    | {
+        question: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqAccordionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: string;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category?: ('general' | 'nfpa' | 'rbq' | 'maintenance' | 'bornes-seches' | 'installation') | null;
+  /**
+   * Ordre d'affichage (0 = premier)
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  /**
+   * Titre H1 principal affiché dans le hero
+   */
+  heading: string;
+  /**
+   * Sous-titre affiché sous le H1
+   */
+  subheading?: string | null;
+  cta: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  /**
+   * Image d'arrière-plan du hero (format paysage recommandé, min 1920px)
+   */
+  backgroundImage: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'heroBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  /**
+   * Titre optionnel de la section statistiques
+   */
+  heading?: string | null;
+  /**
+   * Chiffres clés à afficher (ex: 30+ ans d'expérience)
+   */
+  stats: {
+    /**
+     * Valeur numérique (ex: "30+", "300+", "100%")
+     */
+    value: string;
+    /**
+     * Description du chiffre (ex: "Années d'expérience")
+     */
+    label: string;
+    /**
+     * Suffixe optionnel (ex: "projets", "clients")
+     */
+    suffix?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'statsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock".
+ */
+export interface VideoBlock {
+  /**
+   * Titre de la section vidéo
+   */
+  heading?: string | null;
+  /**
+   * Texte d'introduction avant la vidéo
+   */
+  description?: string | null;
+  /**
+   * URL complète de la vidéo YouTube (ex: https://www.youtube.com/watch?v=xxxxx)
+   */
+  youtubeUrl: string;
+  /**
+   * Image de couverture personnalisée (optionnel, sinon la miniature YouTube sera utilisée)
+   */
+  thumbnail?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1039,36 +1257,6 @@ export interface Sector {
    */
   generateSlug?: boolean | null;
   slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq".
- */
-export interface Faq {
-  id: string;
-  question: string;
-  answer: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  category?: ('general' | 'nfpa' | 'rbq' | 'maintenance' | 'bornes-seches' | 'installation') | null;
-  /**
-   * Ordre d'affichage (0 = premier)
-   */
-  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1435,8 +1623,13 @@ export interface PagesSelect<T extends boolean = true> {
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
+        mediaGridBlock?: T | MediaGridBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        faqAccordionBlock?: T | FAQAccordionBlockSelect<T>;
+        heroBlock?: T | HeroBlockSelect<T>;
+        statsBlock?: T | StatsBlockSelect<T>;
+        videoBlock?: T | VideoBlockSelect<T>;
       };
   meta?:
     | T
@@ -1513,6 +1706,24 @@ export interface MediaBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaGridBlock_select".
+ */
+export interface MediaGridBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  columns?: T;
+  items?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ArchiveBlock_select".
  */
 export interface ArchiveBlockSelect<T extends boolean = true> {
@@ -1533,6 +1744,75 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQAccordionBlock_select".
+ */
+export interface FAQAccordionBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  source?: T;
+  faqs?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  cta?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
+  backgroundImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        suffix?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock_select".
+ */
+export interface VideoBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  youtubeUrl?: T;
+  thumbnail?: T;
   id?: T;
   blockName?: T;
 }
@@ -2234,105 +2514,9 @@ export interface Home {
   /**
    * Construisez la page d'accueil en ajoutant des blocs modulaires
    */
-  layout: (HeroBlock | StatsBlock | VideoBlock)[];
+  layout: (HeroBlock | StatsBlock | MediaGridBlock | FAQAccordionBlock | CallToActionBlock | VideoBlock)[];
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock".
- */
-export interface HeroBlock {
-  /**
-   * Titre H1 principal affiché dans le hero
-   */
-  heading: string;
-  /**
-   * Sous-titre affiché sous le H1
-   */
-  subheading?: string | null;
-  cta: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
-    url?: string | null;
-    label: string;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: ('default' | 'outline') | null;
-  };
-  /**
-   * Image d'arrière-plan du hero (format paysage recommandé, min 1920px)
-   */
-  backgroundImage: string | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'heroBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StatsBlock".
- */
-export interface StatsBlock {
-  /**
-   * Titre optionnel de la section statistiques
-   */
-  heading?: string | null;
-  /**
-   * Chiffres clés à afficher (ex: 30+ ans d'expérience)
-   */
-  stats: {
-    /**
-     * Valeur numérique (ex: "30+", "300+", "100%")
-     */
-    value: string;
-    /**
-     * Description du chiffre (ex: "Années d'expérience")
-     */
-    label: string;
-    /**
-     * Suffixe optionnel (ex: "projets", "clients")
-     */
-    suffix?: string | null;
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'statsBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "VideoBlock".
- */
-export interface VideoBlock {
-  /**
-   * Titre de la section vidéo
-   */
-  heading?: string | null;
-  /**
-   * Texte d'introduction avant la vidéo
-   */
-  description?: string | null;
-  /**
-   * URL complète de la vidéo YouTube (ex: https://www.youtube.com/watch?v=xxxxx)
-   */
-  youtubeUrl: string;
-  /**
-   * Image de couverture personnalisée (optionnel, sinon la miniature YouTube sera utilisée)
-   */
-  thumbnail?: (string | null) | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'videoBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2463,61 +2647,14 @@ export interface HomeSelect<T extends boolean = true> {
     | {
         heroBlock?: T | HeroBlockSelect<T>;
         statsBlock?: T | StatsBlockSelect<T>;
+        mediaGridBlock?: T | MediaGridBlockSelect<T>;
+        faqAccordionBlock?: T | FAQAccordionBlockSelect<T>;
+        cta?: T | CallToActionBlockSelect<T>;
         videoBlock?: T | VideoBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HeroBlock_select".
- */
-export interface HeroBlockSelect<T extends boolean = true> {
-  heading?: T;
-  subheading?: T;
-  cta?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-        appearance?: T;
-      };
-  backgroundImage?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StatsBlock_select".
- */
-export interface StatsBlockSelect<T extends boolean = true> {
-  heading?: T;
-  stats?:
-    | T
-    | {
-        value?: T;
-        label?: T;
-        suffix?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "VideoBlock_select".
- */
-export interface VideoBlockSelect<T extends boolean = true> {
-  heading?: T;
-  description?: T;
-  youtubeUrl?: T;
-  thumbnail?: T;
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

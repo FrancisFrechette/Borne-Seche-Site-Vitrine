@@ -80,6 +80,8 @@ const fr = {
     viewPlans: 'Consulter les plans',
     dataSheet: 'Fiche Technique',
     learnMore: 'En savoir plus',
+    eyebrow: 'Infrastructure Municipale',
+    emptyState: 'Aucun service disponible.',
   },
   realisation: {
     specsLabel: 'Spécifications Techniques',
@@ -95,6 +97,7 @@ const fr = {
       'Nos ingénieurs sont prêts à relever vos défis les plus complexes en infrastructure hydraulique.',
     ctaButton: 'Démarrer un Projet',
     backToProjects: 'Retour aux projets',
+    emptyState: 'Aucune réalisation disponible.',
   },
   faq: {
     eyebrow: 'Support Technique & Expertise',

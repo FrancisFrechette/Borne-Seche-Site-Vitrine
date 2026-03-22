@@ -125,7 +125,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           </div>
           <div className="relative z-10 max-w-2xl">
             <p className="font-label text-primary-container font-semibold uppercase tracking-[0.2em] mb-4">
-              {locale === 'fr' ? 'Infrastructure Municipale' : 'Municipal Infrastructure'}
+              {dict.service.eyebrow}
             </p>
             <h1 className="text-6xl md:text-8xl font-black text-on-surface font-headline leading-tight tracking-tighter">
               {service.title}
