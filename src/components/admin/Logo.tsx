@@ -6,61 +6,22 @@ const Logo: React.FC = () => {
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '12px',
+        padding: '4px 0',
       }}
     >
-      <div
+      <span
         style={{
-          width: '42px',
-          height: '42px',
-          background: 'linear-gradient(135deg, #da291c 0%, #a91f15 100%)',
-          borderRadius: '10px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 12px rgba(218, 41, 28, 0.3)',
+          fontSize: '26px',
+          fontWeight: 900,
+          color: '#da291c',
+          letterSpacing: '0.08em',
+          lineHeight: 1,
+          fontFamily: "'Manrope', system-ui, -apple-system, sans-serif",
+          textTransform: 'uppercase' as const,
         }}
       >
-        <span
-          style={{
-            color: '#ffffff',
-            fontSize: '22px',
-            fontWeight: 900,
-            lineHeight: 1,
-            letterSpacing: '-0.02em',
-            fontFamily: "'Manrope', system-ui, -apple-system, sans-serif",
-          }}
-        >
-          B
-        </span>
-      </div>
-      <div>
-        <div
-          style={{
-            fontSize: '18px',
-            fontWeight: 900,
-            color: '#2c2c39',
-            letterSpacing: '0.06em',
-            lineHeight: 1.1,
-            fontFamily: "'Manrope', system-ui, -apple-system, sans-serif",
-            textTransform: 'uppercase' as const,
-          }}
-        >
-          BOURGELAS
-        </div>
-        <div
-          style={{
-            fontSize: '9px',
-            fontWeight: 600,
-            color: '#6b7280',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase' as const,
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-          }}
-        >
-          Command Center
-        </div>
-      </div>
+        BOURGELAS
+      </span>
     </div>
   )
 }
