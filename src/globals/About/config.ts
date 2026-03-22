@@ -1,5 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
+import { revalidateAbout } from './hooks/revalidateAbout'
+
 export const About: GlobalConfig = {
   slug: 'about',
   label: 'À propos',
@@ -106,4 +108,7 @@ export const About: GlobalConfig = {
       localized: true,
     },
   ],
+  hooks: {
+    afterChange: [revalidateAbout],
+  },
 }

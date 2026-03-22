@@ -9,6 +9,7 @@ import { slugField } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { revalidateSector, revalidateSectorDelete } from './hooks/revalidateSector'
 
 export const Sectors: CollectionConfig = {
   slug: 'sectors',
@@ -69,10 +70,14 @@ export const Sectors: CollectionConfig = {
       defaultValue: 0,
       admin: {
         position: 'sidebar',
-        description: 'Ordre d\'affichage (0 = premier)',
+        description: "Ordre d'affichage (0 = premier)",
       },
     },
     slugField(),
   ],
+  hooks: {
+    afterChange: [revalidateSector],
+    afterDelete: [revalidateSectorDelete],
+  },
   timestamps: true,
 }

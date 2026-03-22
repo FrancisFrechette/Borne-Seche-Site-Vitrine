@@ -17,7 +17,7 @@ export const Footer: GlobalConfig = {
       type: 'textarea',
       localized: true,
       admin: {
-        description: 'Courte description de l\'entreprise affichée dans le footer',
+        description: "Courte description de l'entreprise affichée dans le footer",
       },
     },
     {
@@ -46,6 +46,14 @@ export const Footer: GlobalConfig = {
         {
           name: 'phone',
           type: 'text',
+          validate: (value: string | null | undefined) => {
+            if (!value) return true
+            const phoneRegex = /^\+?[\d\s\-().]{7,20}$/
+            if (!phoneRegex.test(value)) {
+              return 'Veuillez entrer un numéro de téléphone valide (ex: +1 819 555-0123)'
+            }
+            return true
+          },
           admin: {
             description: 'Numéro de téléphone (ex: +1 819 555-0123)',
           },
@@ -69,7 +77,7 @@ export const Footer: GlobalConfig = {
       type: 'text',
       localized: true,
       admin: {
-        description: 'Texte de copyright (ex: © 2026 Solutions d\'eau Bourgelas)',
+        description: "Texte de copyright (ex: © 2026 Solutions d'eau Bourgelas)",
       },
     },
   ],

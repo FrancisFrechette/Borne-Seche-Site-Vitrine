@@ -17,6 +17,7 @@ import { slugField } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { revalidateService, revalidateServiceDelete } from './hooks/revalidateService'
 
 export const Services: CollectionConfig = {
   slug: 'services',
@@ -187,5 +188,9 @@ export const Services: CollectionConfig = {
     },
     slugField(),
   ],
+  hooks: {
+    afterChange: [revalidateService],
+    afterDelete: [revalidateServiceDelete],
+  },
   timestamps: true,
 }

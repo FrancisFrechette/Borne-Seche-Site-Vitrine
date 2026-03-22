@@ -208,7 +208,7 @@ const en = {
       agricultural: 'Agricultural',
       industrial: 'Industrial',
     },
-    copyright: "\u00a9 2025 Solutions d'eau Bourgelas. All rights reserved.",
+    copyright: "\u00a9 2026 Solutions d'eau Bourgelas. All rights reserved.",
     privacy: 'Privacy',
     terms: 'Terms',
   },

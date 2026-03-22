@@ -8,6 +8,7 @@ import {
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { revalidateFaq, revalidateFaqDelete } from './hooks/revalidateFaq'
 
 export const Faq: CollectionConfig = {
   slug: 'faq',
@@ -65,5 +66,9 @@ export const Faq: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    afterChange: [revalidateFaq],
+    afterDelete: [revalidateFaqDelete],
+  },
   timestamps: true,
 }

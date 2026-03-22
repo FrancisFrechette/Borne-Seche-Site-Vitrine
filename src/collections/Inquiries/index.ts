@@ -40,6 +40,14 @@ export const Inquiries: CollectionConfig = {
     {
       name: 'phone',
       type: 'text',
+      validate: (value: string | null | undefined) => {
+        if (!value) return true
+        const phoneRegex = /^\+?[\d\s\-().]{7,20}$/
+        if (!phoneRegex.test(value)) {
+          return 'Veuillez entrer un numéro de téléphone valide (ex: +1 819 555-0123)'
+        }
+        return true
+      },
     },
     {
       name: 'sector',

@@ -17,6 +17,7 @@ import { slugField } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { revalidateRealisation, revalidateRealisationDelete } from './hooks/revalidateRealisation'
 
 export const Realisations: CollectionConfig = {
   slug: 'realisations',
@@ -279,5 +280,9 @@ export const Realisations: CollectionConfig = {
     },
     slugField(),
   ],
+  hooks: {
+    afterChange: [revalidateRealisation],
+    afterDelete: [revalidateRealisationDelete],
+  },
   timestamps: true,
 }

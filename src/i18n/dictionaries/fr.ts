@@ -212,7 +212,7 @@ const fr = {
       agricultural: 'Agricole',
       industrial: 'Industriel',
     },
-    copyright: "© 2025 Solutions d'eau Bourgelas. Tous droits réservés.",
+    copyright: "© 2026 Solutions d'eau Bourgelas. Tous droits réservés.",
     privacy: 'Confidentialité',
     terms: 'Conditions',
   },
